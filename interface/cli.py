@@ -1,10 +1,10 @@
 def generate_inventory_report():
     print("Generating inventory report...")
-    # Call the method from InventoryReports class to generate the report
 
 
 class CLI:
     def __init__(self, inventory_manager, transportation_manager):
+        self.db = None
         self.inventory_manager = inventory_manager
         self.transportation_manager = transportation_manager
 
@@ -17,7 +17,8 @@ class CLI:
             print("2. Update item quantity")
             print("3. Add transportation details")
             print("4. Generate inventory report")
-            print("5. Exit")
+            print("5. Register user")
+            print("6. Exit")
 
             choice = input("Enter your choice: ")
 
@@ -30,6 +31,8 @@ class CLI:
             elif choice == "4":
                 generate_inventory_report()
             elif choice == "5":
+                self.user_register()
+            elif choice == "6":
                 print("Exiting...")
                 break
             else:
@@ -59,3 +62,22 @@ class CLI:
 
         self.transportation_manager.add_transportation(vehicle_id, driver_id, destination, departure_time, arrival_time)
         print("Transportation details added")
+
+    def user_register(self):
+        username = input("username:")
+        password = input("password:")
+        role = input("role:")
+        self.user_add_in_db(username ,password, role)
+
+    def user_add_in_db(self, username, password,role):
+        self.db.cursor.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)",
+                               (username, password, role))
+        self.db.conn.commit()
+
+
+# Usage
+db_file = "database/inventory_management.db"
+app = CLI(db_file)
+app.user_register()
+
+
