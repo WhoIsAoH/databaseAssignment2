@@ -4,9 +4,9 @@ import sqlite3
 class Database:
 
     def __init__(self, db_file):
-        self.cursor = None  # Fix here
         self.conn = sqlite3.connect(db_file)
         self.cursor = self.conn.cursor()
+        self.cursor = None
 
     def create_tables(self, create_table_file):
         with open(create_table_file, 'r') as f:

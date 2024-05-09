@@ -1,49 +1,54 @@
+def generate_inventory_report():
+    print("Generating inventory report...")
+    # Call the method from InventoryReports class to generate the report
+
+
 class CLI:
     def __init__(self, inventory_manager, transportation_manager):
         self.inventory_manager = inventory_manager
         self.transportation_manager = transportation_manager
 
     def start(self):
-        print("Greeting to St. Mary's Logistics Database System")
+        print("Welcome to St. Mary's Logistics Database System")
 
         while True:
             print("\nPlease select an option:")
-            print("i. Add item to inventory")
-            print("ii. Update item quantity")
-            print("iii. Add transportation details")
-            print("iv. Generate inventory report")
-            print("v. Exit")
+            print("1. Add item to inventory")
+            print("2. Update item quantity")
+            print("3. Add transportation details")
+            print("4. Generate inventory report")
+            print("5. Exit")
 
-            option = input("Enter your choice: ")
+            choice = input("Enter your choice: ")
 
-            if option == "i":
+            if choice == "1":
                 self.add_item_to_inventory()
-            elif option == "ii":
+            elif choice == "2":
                 self.update_item_quantity()
-            elif option == "iii":
+            elif choice == "3":
                 self.add_transportation_details()
-            elif option == "iv":
-                self.generate_inventory_report()
-            elif option == "v":
-                print("Exit...")
+            elif choice == "4":
+                generate_inventory_report()
+            elif choice == "5":
+                print("Exiting...")
                 break
             else:
-                print("Invalid option")
-
-    def add_item_to_inventory(self):
-        name = input("Enter item name: ")
-        quantity = int(input("Enter quantity: "))
-        location = input("Enter location: ")
-
-        self.inventory_manager.add_item(name, quantity, location)
-        print("Item added to inventory")
+                print("Invalid choice")
 
     def update_item_quantity(self):
         item_id = int(input("Enter item ID: "))
         new_quantity = int(input("Enter new quantity: "))
 
         self.inventory_manager.update_quantity(item_id, new_quantity)
-        print("Quantity updated")
+        print("Successfully updated")
+
+    def add_item_to_inventory(self):
+        name = input("Enter the name of the item: ")
+        quantity = int(input("Enter quantity: "))
+        location = input("Enter location: ")
+
+        self.inventory_manager.add_item(name, quantity, location)
+        print("successfully item added to inventory")
 
     def add_transportation_details(self):
         vehicle_id = int(input("Enter vehicle ID: "))
@@ -54,7 +59,3 @@ class CLI:
 
         self.transportation_manager.add_transportation(vehicle_id, driver_id, destination, departure_time, arrival_time)
         print("Transportation details added")
-
-    def generate_inventory_report(self):
-        print("Generating inventory report...")
-        # Call the method from InventoryReports class to generate the report

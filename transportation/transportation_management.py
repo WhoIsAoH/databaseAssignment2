@@ -13,7 +13,5 @@ class TransportationManagement:
         self.db.conn.commit()
 
     def update_transportation(self, transportation_id, **kwargs):
-        # Implement method to update transportation details
         pass
 
-    # Add other transportation management methods as needed
