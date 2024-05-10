@@ -1,12 +1,14 @@
+
+
 def generate_inventory_report():
     print("Generating inventory report...")
 
 
 class CLI:
-    def __init__(self, inventory_manager, transportation_manager):
-        self.db = None
+    def __init__(self, inventory_manager, transportation_manager, security_file):
         self.inventory_manager = inventory_manager
         self.transportation_manager = transportation_manager
+        self.security_file = security_file
 
     def start(self):
         print("Welcome to St. Mary's Logistics Database System")
@@ -31,7 +33,7 @@ class CLI:
             elif choice == "4":
                 generate_inventory_report()
             elif choice == "5":
-                self.user_register()
+                self.register()
             elif choice == "6":
                 print("Exiting...")
                 break
@@ -63,21 +65,8 @@ class CLI:
         self.transportation_manager.add_transportation(vehicle_id, driver_id, destination, departure_time, arrival_time)
         print("Transportation details added")
 
-    def user_register(self):
+    def register(self):
         username = input("username:")
         password = input("password:")
-        role = input("role:")
-        self.user_add_in_db(username ,password, role)
-
-    def user_add_in_db(self, username, password,role):
-        self.db.cursor.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)",
-                               (username, password, role))
-        self.db.conn.commit()
-
-
-# Usage
-db_file = "database/inventory_management.db"
-app = CLI(db_file)
-app.user_register()
-
-
+        role = input("role")
+        self.security_file.authenticate_user(username, password, role)

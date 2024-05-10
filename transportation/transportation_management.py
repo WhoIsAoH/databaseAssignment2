@@ -14,4 +14,3 @@ class TransportationManagement:
 
     def update_transportation(self, transportation_id, **kwargs):
         pass
-
