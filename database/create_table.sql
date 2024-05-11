@@ -20,8 +20,7 @@ CREATE TABLE IF NOT EXISTS transportation (
     destination TEXT,
     departure_time DATETIME,
     arrival_time DATETIME,
-    FOREIGN KEY (vehicle_id) REFERENCES transportation(id),
-    FOREIGN KEY (driver_id) REFERENCES transportation(id)
+    FOREIGN KEY (shipment_id) REFERENCES shipments(id)
 );
 
 CREATE TABLE IF NOT EXISTS users (
