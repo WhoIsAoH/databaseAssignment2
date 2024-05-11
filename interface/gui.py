@@ -100,11 +100,6 @@ class GUI:
         try:
             item_id = int(item_id)
             new_quantity = int(new_quantity)
-            # if self.is_item_id_present(item_id):
-            #     self.cursor.execute("UPDATE inventory SET quantity = ? WHERE item_id = ?", (new_quantity, item_id))
-            #     messagebox.showinfo("success", "updated quantity")
-            #     self.conn.commit()
-
             if new_quantity <= 0:
                 messagebox.showerror("Error", "Quantity must be greater than zero")
             else:
@@ -190,10 +185,4 @@ class GUI:
             messagebox.showinfo("Empty Inventory", "The inventory is empty.")
 
 
-# Usage example
-if __name__ == "__main__":
-    db_file = "inventory_managements.db"
-    inventory_manager = None
-    transportation_manager = None
-    gui = GUI(inventory_manager, transportation_manager, db_file)
-    gui.run()
+
