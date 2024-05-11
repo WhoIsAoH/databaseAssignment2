@@ -1,11 +1,14 @@
+from inventory.inventory_reports import InventoryReports
 
 
-def generate_inventory_report():
-    print("Generating inventory report...")
+# def generate_inventory_report():
+#     print("Generating inventory report...")
 
 
 class CLI:
-    def __init__(self, inventory_manager, transportation_manager, security_file):
+    def __init__(self, inventory_manager, transportation_manager, security_file,db_file):
+        self.db_file = db_file
+        self.db_file = self.db_file
         self.inventory_manager = inventory_manager
         self.transportation_manager = transportation_manager
         self.security_file = security_file
@@ -31,7 +34,7 @@ class CLI:
             elif choice == "3":
                 self.add_transportation_details()
             elif choice == "4":
-                generate_inventory_report()
+                self.generate_inventory_report()
             elif choice == "5":
                 self.register()
             elif choice == "6":
@@ -70,3 +73,14 @@ class CLI:
         password = input("password:")
         role = input("role")
         self.security_file.authenticate_user(username, password, role)
+
+    def generate_inventory_report(self):
+        print("Generating inventory report...")
+        inventory_reports = InventoryReports(self.db_file)
+        inventory_report = inventory_reports.generate_inventory_report()
+        if inventory_report:
+            output_file = "inventory_report.txt"
+            with open(output_file, "w") as file:
+                for item in inventory_report:
+                    file.write(f"ID: {item[0]}, Name: {item[1]}, Quantity: {item[2]}, Location: {item[3]}\n")
+        print("Report Generated", f"The inventory report has been saved to file")

@@ -1,0 +1,3 @@
+ID: 1, Name: book, Quantity: 2, Location: biratnagar
+ID: 2, Name: jerry, Quantity: 10, Location: biratnagar
+ID: 3, Name: books, Quantity: 19, Location: washingtondc

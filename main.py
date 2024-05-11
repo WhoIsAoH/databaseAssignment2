@@ -20,9 +20,9 @@ def main():
     Authorization(db_file)
     transportation_manager = TransportationManagement(db_file)
 
-    interface_of_user = input("Choose interface (CLI or GUI): ").lower()
+    interface_of_user = input("Choose interface GUI OR CLI: ").lower()
     if interface_of_user == 'cli':
-        cli_interface = CLI(inventory_manager, transportation_manager,security_file)
+        cli_interface = CLI(inventory_manager, transportation_manager, security_file, db_file)
         cli_interface.start()
     elif interface_of_user == 'gui':
         gui_interface = GUI(inventory_manager, transportation_manager, db_file)

@@ -15,26 +15,26 @@ class GUI:
         self.root.title("St. Mary's Logistics Database System")
 
         # Create GUI components
-        self.label = tk.Label(self.root, text="Welcome to St. Mary's Logistics Database System", padx=10, pady=10)
+        self.label = tk.Label(self.root, text="Welcome to St. Mary's Logistics Database System", padx=30, pady=30 , fg="red")
         self.label.pack()
 
         self.menu_frame = tk.Frame(self.root)
         self.menu_frame.pack()
 
-        self.add_item_button = tk.Button(self.menu_frame, text="Add Item to Inventory", command=self.add_item_window)
-        self.add_item_button.grid(row=0, column=0, padx=5, pady=5)
+        self.add_item_button = tk.Button(self.menu_frame, text="Add Item to Inventory" , command=self.add_item_window)
+        self.add_item_button.grid(row=0, column=0, padx=10, pady=10)
 
         self.update_quantity_button = tk.Button(self.menu_frame, text="Update Item Quantity",
                                                 command=self.update_quantity_window)
-        self.update_quantity_button.grid(row=0, column=1, padx=5, pady=5)
+        self.update_quantity_button.grid(row=0, column=1, padx=10, pady=10)
 
         self.add_transportation_button = tk.Button(self.menu_frame, text="Add Transportation Details",
                                                    command=self.add_transportation_window)
-        self.add_transportation_button.grid(row=1, column=0, padx=5, pady=5)
+        self.add_transportation_button.grid(row=1, column=0, padx=10, pady=10)
 
         self.generate_report_button = tk.Button(self.menu_frame, text="Generate Inventory Report",
                                                 command=self.generate_report)
-        self.generate_report_button.grid(row=1, column=1, padx=5, pady=5)
+        self.generate_report_button.grid(row=1, column=1, padx=10, pady=10)
 
     def run(self):
         self.root.mainloop()
@@ -44,19 +44,19 @@ class GUI:
         add_item_window.title("Add Item to Inventory")
 
         name_label = tk.Label(add_item_window, text="Item Name:")
-        name_label.grid(row=0, column=0, padx=5, pady=5)
+        name_label.grid(row=0, column=0, padx=10, pady=10)
         name_entry = tk.Entry(add_item_window)
-        name_entry.grid(row=0, column=1, padx=5, pady=5)
+        name_entry.grid(row=0, column=1, padx=10, pady=10)
 
         quantity_label = tk.Label(add_item_window, text="Quantity:")
-        quantity_label.grid(row=1, column=0, padx=5, pady=5)
+        quantity_label.grid(row=1, column=0, padx=10, pady=10)
         quantity_entry = tk.Entry(add_item_window)
-        quantity_entry.grid(row=1, column=1, padx=5, pady=5)
+        quantity_entry.grid(row=1, column=1, padx=10, pady=10)
 
         location_label = tk.Label(add_item_window, text="Location:")
-        location_label.grid(row=2, column=0, padx=5, pady=5)
+        location_label.grid(row=2, column=0, padx=10, pady=10)
         location_entry = tk.Entry(add_item_window)
-        location_entry.grid(row=2, column=1, padx=5, pady=5)
+        location_entry.grid(row=2, column=1, padx=10, pady=10)
 
         add_button = tk.Button(add_item_window, text="Add",
                                command=lambda: self.add_item(name_entry.get(), quantity_entry.get(),
@@ -94,21 +94,17 @@ class GUI:
                                                                        update_quantity_window))
         update_button.grid(row=2, columnspan=2, padx=5, pady=5)
 
-    def is_item_id_present(self, item_id):
-        self.cursor.execute("SELECT COUNT(*) FROM inventory WHERE item_id = ?", (item_id,))
-        count = self.cursor.fetchone()[0]
-        return count > 0
+
 
     def update_quantity(self, item_id, new_quantity, window):
         try:
             item_id = int(item_id)
             new_quantity = int(new_quantity)
-            if self.is_item_id_present(item_id):
-                self.cursor.execute("UPDATE inventory SET quantity = ? WHERE item_id = ?", (new_quantity, item_id))
-                messagebox.showinfo("success", "updated quantity")
-                self.conn.commit()
-            else:
-                messagebox.showerror("Error", "Id not found")
+            # if self.is_item_id_present(item_id):
+            #     self.cursor.execute("UPDATE inventory SET quantity = ? WHERE item_id = ?", (new_quantity, item_id))
+            #     messagebox.showinfo("success", "updated quantity")
+            #     self.conn.commit()
+
             if new_quantity <= 0:
                 messagebox.showerror("Error", "Quantity must be greater than zero")
             else:
@@ -175,25 +171,28 @@ class GUI:
         inventory_reports = InventoryReports(self.db_file)
         inventory_report = inventory_reports.generate_inventory_report()
 
-        output_file = "inventory_report.txt"
-        with open(output_file, "w") as file:
-            for item in inventory_report:
-                file.write(f"ID: {item[0]}, Name: {item[1]}, Quantity: {item[2]}, Location: {item[3]}\n")
+        if inventory_report:
+            output_file = "inventory_report.txt"
+            with open(output_file, "w") as file:
+                for item in inventory_report:
+                    file.write(f"ID: {item[0]}, Name: {item[1]}, Quantity: {item[2]}, Location: {item[3]}\n")
 
-        report_window = tk.Toplevel(self.root)
-        report_window.title("Inventory Report")
+            report_window = tk.Toplevel(self.root)
+            report_window.title("Inventory Report")
 
-        with open(output_file, "r") as file:
-            report_text = file.read()
-            report_label = tk.Label(report_window, text=report_text)
-            report_label.pack()
+            with open(output_file, "r") as file:
+                report_text = file.read()
+                report_label = tk.Label(report_window, text=report_text)
+                report_label.pack()
 
-        messagebox.showinfo("Report Generated", f"The inventory report has been saved to {output_file}")
+            messagebox.showinfo("Report Generated", f"The inventory report has been saved to {output_file}")
+        else:
+            messagebox.showinfo("Empty Inventory", "The inventory is empty.")
 
 
 # Usage example
 if __name__ == "__main__":
-    db_file = "inventory_management.db"
+    db_file = "inventory_managements.db"
     inventory_manager = None
     transportation_manager = None
     gui = GUI(inventory_manager, transportation_manager, db_file)
