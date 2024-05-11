@@ -24,4 +24,3 @@ class Authentication:
             if Encryption.verify_password(password, hashed_password):
                 return role
         return None
-
