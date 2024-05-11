@@ -1,12 +1,8 @@
 from inventory.inventory_reports import InventoryReports
 
 
-# def generate_inventory_report():
-#     print("Generating inventory report...")
-
-
 class CLI:
-    def __init__(self, inventory_manager, transportation_manager, security_file,db_file):
+    def __init__(self, inventory_manager, transportation_manager, security_file, db_file):
         self.db_file = db_file
         self.db_file = self.db_file
         self.inventory_manager = inventory_manager

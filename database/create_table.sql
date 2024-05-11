@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS security_logs (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE roles (
+CREATE TABLE IF NOT EXISTS roles (
     id INTEGER PRIMARY KEY,
     role TEXT NOT NULL,
     resource TEXT NOT NULL
