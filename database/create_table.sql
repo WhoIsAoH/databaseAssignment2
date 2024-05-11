@@ -38,3 +38,9 @@ CREATE TABLE IF NOT EXISTS security_logs (
     timestamp DATETIME,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE roles (
+    id INTEGER PRIMARY KEY,
+    role TEXT NOT NULL,
+    resource TEXT NOT NULL
+);
